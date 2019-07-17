@@ -1,8 +1,13 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="container-fluid">
-  Welcome to {{ title }}!
-  <a routerLink="/search">Search</a>
-  <a routerLink="/detail">Detail</a> |
+<div class="container-fluid justify-content-center align-items-center">
+  <div class="input-group mb-3 d-flex mt-3">
+      <input type="text" class="form-control" placeholder="Enter Query" [(ngModel)]="searchQuery.query">
+    <div class="input-group-append">
+      <a class="btn btn-outline-secondary" type="button" id="button-addon2" routerLink="/search">Search</a>
+    </div>
+
+  </div>
+
 </div>
 
 <router-outlet></router-outlet>
