@@ -5,7 +5,7 @@ import {PageDetailComponent} from './page-detail/page-detail.component';
 
 
 const routes: Routes = [
-  {path:"search",component:SearchResultComponent},
+  {path:"search/:query",component:SearchResultComponent},
   {path:"detail",component:PageDetailComponent}
 ];
 

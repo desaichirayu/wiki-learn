@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { PageDetailComponent } from './page-detail/page-detail.component';
 import {FormsModule} from '@angular/forms';
+import {SearchService} from "./services/search.service";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import {FormsModule} from '@angular/forms';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

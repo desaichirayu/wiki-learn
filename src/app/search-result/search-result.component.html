@@ -1,2 +1,7 @@
-<p>Search</p>
+<h1>{{searchQuery}}</h1>
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let result of results">
+    {{result}}
+  </li>
+</ul>
 
