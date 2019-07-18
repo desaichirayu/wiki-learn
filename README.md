@@ -1,12 +1,12 @@
 Application URL:http://wiki-learn.herokuapp.com/
 
 # About
-WikiLearn is a service that users can use to create and share notes based on wikipedia pages. The curernt prototype shows a basic search functionality followed by a detail page.
+WikiLearn is an application that users can use to create and share notes based on wikipedia pages. The curernt prototype shows a basic search functionality followed by a detail page.
 
 Users can search for articles based on title/content and will see a list of results based on their queries. Clicking on one of the results will lead them to a page that show the summary of the page they clicked on. Future work would involve incorporating note-taking to the page and sharing the created notes.
 
-We use the wikimedia API endpoint wrapped in a wrapper library [wikijs] as a our service. The wrapper provides core request handling functionality.
-The current prototype uses the search(...) function that returns a paginated list of results that is then routed to the UI.
+We use the wikimedia API endpoint wrapped in a wrapper library [wikijs] as well as REST calls to the wikimedia API to fetch data. The wrapper provides core request handling functionality and utilty functions for tasks like parsing wikipedia content.
+The current prototype uses the search(...) function that returns list of results that is then routed to the UI. It also uses a REST call to retrive the page thumbnail image url.
 
 # API
 ### Search
