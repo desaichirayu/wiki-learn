@@ -1,7 +1,6 @@
-<h1>{{searchQuery}}</h1>
 <ul class="list-group">
   <li class="list-group-item" *ngFor="let result of results">
-    {{result}}
+    <a routerLink="/details/{{result}}">{{result}}</a>
   </li>
 </ul>
 
