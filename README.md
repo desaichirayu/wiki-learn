@@ -1,27 +1,43 @@
-# WikiLearn
+Link:http://wiki-learn.herokuapp.com/
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.0.
+# About
+WikiLearn is a service that users can use to create and share notes based on wikipedia pages. The curernt prototype shows a basic search functionality followed by a detail page.
 
-## Development server
+Users can search for articles based on title/content and will see a list of results based on their queries. Clicking on one of the results will lead them to a page that show the summary of the page they clicked on. Future work would involve incorporating note-taking to the page and sharing the created notes.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+We use the wikimedia API endpoint wrapped in a wrapper library [wikijs] as a our service. The wrapper provides core request handling functionality.
+The current prototype uses the search(...) function that returns a paginated list of results that is then routed to the UI.
 
-## Code scaffolding
+# API
+### Search
+A sample query would be of as follows:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```javascript
+wiki().search("area 51") -> [Array]
+```
+This returns a list of page titles matched by the content of the query.
+This is done when the user enters a query in the search bar in */search*
+and clicks on the search button
 
-## Build
+### Summary
+A summary query would be as follows [Assuming usre clicked on Area 51]
+```javascript
+wiki().page("Area 51").then(page => page.summary()) ->[String]
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+This returns a brief summary of the page.
+This is done when the user clicks on a page title, the result is displayed in the */details* route
 
-## Running unit tests
+### Thumbnail
+We also provide an api to retrieve thumbnails of images given the page has a thumbnail.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+#### Endpoint and Request
+```javascript
+apiURL = 'https://en.wikipedia.org/w/api.php?action=query';
 
-## Running end-to-end tests
+aiURLOptions = '&format=json&origin=*&formatversion=2&prop=pageimages|pageterms&piprop=thumbnail&pithumbsize=600&pilicense=any&titles=';
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+fetch(this.apiURL + this.aiURLOptions + "Area 51")
+    .then(resp => resp.json()).then(rj => rj.query.pages[0].thumbnail.source);
+```
+This happens in the background along with the summary to populate the /details page.
