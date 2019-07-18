@@ -8,12 +8,16 @@ export class DetailsService {
 
   constructor() { }
 
+  apiURL = 'https://en.wikipedia.org/w/api.php?action=query';
+  aiURLOptions = '&format=json&origin=*&formatversion=2&prop=pageimages|pageterms&piprop=thumbnail&pithumbsize=600&pilicense=any&titles=';
+
   getSummary(title){
     return wiki().page(title).then(page => page.summary());
   }
 
-  getImageURL(title){
-    // wiki().page(title).then(page => page.images()).then(console.log);
-    return wiki().page(title).then(page => page.images());
+  getPageImageURL(title){
+    return fetch(this.apiURL + this.aiURLOptions + title)
+      .then(resp => resp.json()).then(rj => rj.query.pages[0].thumbnail.source);
   }
+
 }

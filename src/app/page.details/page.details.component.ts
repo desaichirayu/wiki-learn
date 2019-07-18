@@ -19,7 +19,7 @@ export class PageDetailsComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.title = params.title;
       this.detailsService.getSummary(this.title).then(summary => this.summary = summary);
-      this.detailsService.getImageURL(this.title).then(images => this.imageURL = images[Math.floor(Math.random()*images.length)]);
+      this.detailsService.getPageImageURL(this.title).then(url => this.imageURL = url);
     })
   }
 
