@@ -1,13 +1,17 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div class="container-fluid justify-content-center align-items-center">
-  <div class="input-group mb-3 d-flex mt-3">
-      <input type="text" class="form-control" placeholder="Enter Query" [(ngModel)]="searchQuery.query">
-    <div class="input-group-append">
-      <a class="btn btn-outline-secondary" type="button" id="button-addon2" routerLink="/search/{{searchQuery.query}}">Search</a>
+<div class="container container-fluid">
+  <div class="row mt-4 mb-4">
+    <div class="col-lg-2 mx-auto">
+      <img src="../assets/images/wikipedia_logo.png" alt="wikipedia logo" class="float-right" style="height: 40px; width: 40px"/>
     </div>
-
+    <div class="col-lg-8 mx-auto">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Enter Title Search Phrase" [(ngModel)]="searchQuery.query">
+        <span class="input-group-btn">
+                    <a class="btn btn-outline-secondary" type="button" id="button-addon2" routerLink="/search/{{searchQuery.query}}">Search</a>
+                </span>
+      </div>
+    </div>
+    <div class="col-lg-2 mx-auto"></div>
   </div>
-
 </div>
-
 <router-outlet></router-outlet>
