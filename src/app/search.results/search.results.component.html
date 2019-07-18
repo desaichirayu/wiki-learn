@@ -1,6 +1,16 @@
-<ul class="list-group">
-  <li class="list-group-item" *ngFor="let result of results">
-    <a routerLink="/details/{{result}}">{{result}}</a>
-  </li>
-</ul>
+<div class="container container-fluid">
+  <div class="row mt-4 mb-4">
+    <div class="col-lg-1 mx-auto">
+    </div>
+    <div class="col-lg-9 mx-auto">
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-secondary">Matching Page Titles</li>
+        <li class="list-group-item" *ngFor="let result of results">
+          <a routerLink="/details/{{result}}" style="color: inherit">{{result}}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-1 mx-auto"></div>
+  </div>
+</div>
 
