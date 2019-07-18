@@ -19,10 +19,8 @@ export class SearchResultsComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       this.searchQuery = params.query;
-      this.searchService.doSearch(this.searchQuery).then(res => {
-        res.next().then(data => this.results = data.results);
+      this.searchService.doSearch(this.searchQuery).then(res => this.results = res.results);
       })
-    })
   }
 
 }

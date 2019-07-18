@@ -8,7 +8,12 @@ export class DetailsService {
 
   constructor() { }
 
-  getDetails(title){
+  getSummary(title){
     return wiki().page(title).then(page => page.summary());
+  }
+
+  getImageURL(title){
+    // wiki().page(title).then(page => page.images()).then(console.log);
+    return wiki().page(title).then(page => page.images());
   }
 }
