@@ -3,23 +3,24 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SearchResultComponent } from './search-result/search-result.component';
-import { PageDetailComponent } from './page-detail/page-detail.component';
+import { SearchResultsComponent } from './search.results/search.results.component';
 import {FormsModule} from '@angular/forms';
 import {SearchService} from "./services/search.service";
+import { PageDetailsComponent } from './page.details/page.details.component';
+import {DetailsService} from "./services/details.service";
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchResultComponent,
-    PageDetailComponent
+    SearchResultsComponent,
+    PageDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [SearchService],
+  providers: [SearchService, DetailsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

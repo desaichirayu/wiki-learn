@@ -4,10 +4,10 @@ import {SearchService} from "../services/search.service";
 
 @Component({
   selector: 'app-search-result',
-  templateUrl: './search-result.component.html',
-  styleUrls: ['./search-result.component.css']
+  templateUrl: './search.results.component.html',
+  styleUrls: ['./search.results.component.css']
 })
-export class SearchResultComponent implements OnInit {
+export class SearchResultsComponent implements OnInit {
 
 
   constructor(private activatedRoute: ActivatedRoute, private searchService: SearchService) {
