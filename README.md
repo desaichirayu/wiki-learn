@@ -38,7 +38,7 @@ This returns a brief summary of the page like:
 This is done when the user clicks on a page title, the result is displayed in the */details* route
 
 ### Thumbnail
-We also provide make a REST call to wikimedia API to retrieve thumbnails of images if the page has a thumbnail.
+We also make a REST call to wikimedia API to retrieve thumbnails of images if the page has a thumbnail.
 
 #### Endpoint and Request
 ```javascript
