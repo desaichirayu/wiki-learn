@@ -1,7 +1,5 @@
 ### Application URL: 
-```javascript
 http://wiki-learn.herokuapp.com/
-```
 
 # About
 WikiLearn is an application that users can use to create and share notes based on wikipedia pages. The curernt prototype shows a basic search functionality followed by a detail page.
