@@ -13,11 +13,13 @@ export class PageDetailsComponent implements OnInit {
 
   title = '';
   summary = '';
+  imageURL = '';
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       this.title = params.title;
-      this.detailsService.getDetails(this.title).then(summary => this.summary = summary);
+      this.detailsService.getSummary(this.title).then(summary => this.summary = summary);
+      this.detailsService.getPageImageURL(this.title).then(url => this.imageURL = url);
     })
   }
 
