@@ -1,0 +1,20 @@
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+
+.card-columns {
+  @include media-breakpoint-only(xs) {
+    column-count: 1!important;
+  }
+  @include media-breakpoint-only(sm) {
+    column-count: 1!important;
+  }
+  @include media-breakpoint-only(md) {
+    column-count: 3!important;;
+  }
+  @include media-breakpoint-only(lg) {
+    column-count: 6!important;;
+  }
+  @include media-breakpoint-only(xl) {
+    column-count: 6!important;;
+  }
+}

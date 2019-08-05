@@ -8,17 +8,20 @@ import {FormsModule} from '@angular/forms';
 import {SearchService} from "./services/search.service";
 import { PageDetailsComponent } from './page.details/page.details.component';
 import {DetailsService} from "./services/details.service";
+import {UserProfileComponent} from './user.profile/user.profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchResultsComponent,
-    PageDetailsComponent
+    PageDetailsComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
+
   ],
   providers: [SearchService, DetailsService],
   bootstrap: [AppComponent]

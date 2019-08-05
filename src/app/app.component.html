@@ -1,7 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-dark text-white">
+    <a class="navbar-brand font-weight-bold text-white" href="/"><img src="../assets/images/wiki_search.png" height="40" width="40"/>Wiki Learn</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+      </ul>
+      <ul class="navbar-nav float-right">
+        <li class="nav-item mr-4">
+          <a class="btn btn-outline-secondary mp-2 btn-block" style="color: inherit" href="#" data-toggle="modal" data-target="#modalLoginForm">Login</a>
+        </li>
+
+        <li class="nav-item mr-4">
+          <a class="btn btn-outline-secondary mp-2 btn-block" style="color: inherit" href="#" data-toggle="modal" data-target="#modalRegisterForm">Sign Up</a>
+        </li>
+
+        <li class="nav-item dropdown mr-4">
+          <a class="btn btn-outline-secondary mp-2 btn-block nav-link dropdown-toggle" style="color:inherit;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Chirayu Desai
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Administration</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Logout</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+</nav>
 <div class="container container-fluid">
-  <div class="row mt-4 mb-4">
+  <div [hidden]="this.router.url.includes('profile')" class="row mt-4 mb-4">
     <div class="col-lg-1 mx-auto">
-      <img src="../assets/images/wikipedia_logo.png" alt="wikipedia logo" class="float-right" style="height: 40px; width: 40px"/>
+
     </div>
     <div class="col-lg-10 mx-auto">
       <div class="input-group">
@@ -12,6 +44,170 @@
       </div>
     </div>
     <div class="col-lg-1 mx-auto"></div>
+  </div>
+  <div [hidden]="!this.router.url.endsWith('/')" class="row mt-4 mb-4">
+    <div class="col-lg-1 mx-auto">
+    </div>
+    <div class="col-lg-10 mx-auto text-center">
+      <h1>Welcome to Wiki Learn!</h1>
+      <br>
+      <h3>Go Ahead Search Something..</h3>
+    </div>
+    <div class="col-lg-1 mx-auto"></div>
+  </div>
+  <div [hidden]="!this.router.url.endsWith('/')" class="row mt-4 mb-4" style="bottom: 0">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+      <div class="card-columns">
+        <div class="card">
+          <img class="card-img-top" src="../assets/images/gard_wiki.png" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Note A</h5>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top" src="../assets/images/gard_wiki.png" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Note B</h5>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top" src="../assets/images/gard_wiki.png" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Note C</h5>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top" src="../assets/images/gard_wiki.png" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Note A</h5>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top" src="../assets/images/gard_wiki.png" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Note B</h5>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top" src="../assets/images/gard_wiki.png" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Note C</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1"></div>
+  </div>
+  <div [hidden]="!this.router.url.endsWith('/')" class="row mt-4 mb-4" style="bottom: 0">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+      <div class="card-columns">
+        <div class="card">
+          <img class="card-img-top" src="../assets/images/gard_wiki.png" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">User A</h5>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top" src="../assets/images/gard_wiki.png" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">User B</h5>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top" src="../assets/images/gard_wiki.png" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">User C</h5>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top" src="../assets/images/gard_wiki.png" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">User A</h5>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top" src="../assets/images/gard_wiki.png" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">User B</h5>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top" src="../assets/images/gard_wiki.png" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">User C</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1"></div>
+  </div>
+
+  <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mx-3">
+          <div class="md-form mb-5">
+            <i class="fas fa-envelope prefix grey-text"></i>
+            <input type="email" id="defaultForm-email" class="form-control validate">
+            <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>
+          </div>
+
+          <div class="md-form mb-4">
+            <i class="fas fa-lock prefix grey-text"></i>
+            <input type="password" id="defaultForm-pass" class="form-control validate">
+            <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
+          </div>
+
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button class="btn btn-default">Login</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mx-3">
+          <div class="md-form mb-5">
+            <i class="fas fa-user prefix grey-text"></i>
+            <input type="text" id="orangeForm-name" class="form-control validate">
+            <label data-error="wrong" data-success="right" for="orangeForm-name">Your name</label>
+          </div>
+          <div class="md-form mb-5">
+            <i class="fas fa-envelope prefix grey-text"></i>
+            <input type="email" id="orangeForm-email" class="form-control validate">
+            <label data-error="wrong" data-success="right" for="orangeForm-email">Your email</label>
+          </div>
+
+          <div class="md-form mb-4">
+            <i class="fas fa-lock prefix grey-text"></i>
+            <input type="password" id="orangeForm-pass" class="form-control validate">
+            <label data-error="wrong" data-success="right" for="orangeForm-pass">Your password</label>
+          </div>
+
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button class="btn btn-deep-orange">Sign up</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <router-outlet></router-outlet>
