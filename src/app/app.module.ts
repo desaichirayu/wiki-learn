@@ -9,13 +9,17 @@ import {SearchService} from "./services/search.service";
 import { PageDetailsComponent } from './page.details/page.details.component';
 import {DetailsService} from "./services/details.service";
 import {UserProfileComponent} from './user.profile/user.profile.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchResultsComponent,
     PageDetailsComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
