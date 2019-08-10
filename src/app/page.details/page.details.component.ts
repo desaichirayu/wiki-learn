@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {DetailsService} from "../services/details.service";
 
-import {not} from 'rxjs/internal-compatibility';
 
 @Component({
   selector: 'app-page.details',
@@ -86,7 +85,12 @@ export class PageDetailsComponent implements OnInit {
     });
   };
 
+  getUTC(x){
 
+    var d = new Date(x);
+    return d.toUTCString();
+
+  }
 
   addNote = () =>{
     this.detailsService.postNote(this.userId,this.pageId,this.usernote).then(note=>

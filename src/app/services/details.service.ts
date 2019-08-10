@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {not} from 'rxjs/internal-compatibility';
+import {async} from 'q';
 
 const wiki = require('wikijs').default;
 
@@ -93,14 +94,16 @@ export class DetailsService {
               this.PAGE_ID = response['id'];
               this.PAGE_BASE_LIKES = response['numberOfLikes'];
               this.PAGE_BASE_DISLIKES = response['numberOfDisLikes'];
-              return this.getEntitiesFromRemote(title, summary).then(
-                response => {
-                  this.PAGE_TAGS = response;
-                  console.log(response);
-                  response.map(tag => this.createEntity(this.PAGE_ID, tag));
-                  return this.getReturnData();
+              return this.getEntitiesFromRemote(title, summary).then(()=> {
 
+                return this.getEntitiesFromDB(this.PAGE_ID).then(
+                  response => {
+                    this.PAGE_TAGS = response;
+                    return this.getReturnData();
+                  });
                 }
+
+
               );
             }
           );
@@ -195,13 +198,15 @@ export class DetailsService {
         'content': summary
       })
     }).then(response => response.json()).then(
-      response => {
-        return response['entities'].map(e => this.entityHelper(e));
+      async (response) => {
+        var responses  = response['entities'].map(e => this.entityHelper(e));
+        await responses.map(response=>this.createEntity(this.PAGE_ID, response));
+        return ;
       }
     );
   }
 
-  createEntity(pid, entity) {
+  async createEntity(pid, entity) {
     console.log(entity);
     fetch(this.URL_CREATE_TAGS.replace('{pid}', pid), {
       method: 'POST',

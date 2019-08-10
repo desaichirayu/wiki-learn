@@ -8,12 +8,14 @@ import {FormsModule} from '@angular/forms';
 import {SearchService} from "./services/search.service";
 import { PageDetailsComponent } from './page.details/page.details.component';
 import {DetailsService} from "./services/details.service";
+import { TagresultsComponent } from './tagresults/tagresults.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchResultsComponent,
-    PageDetailsComponent
+    PageDetailsComponent,
+    TagresultsComponent
   ],
   imports: [
     BrowserModule,
