@@ -8,18 +8,20 @@ import {FormsModule} from '@angular/forms';
 import {SearchService} from "./services/search.service";
 import { PageDetailsComponent } from './page.details/page.details.component';
 import {DetailsService} from "./services/details.service";
-import {UserProfileComponent} from './user.profile/user.profile.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
+import {UserService} from "./services/user.service";
+import {CookieService} from "ngx-cookie-service";
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchResultsComponent,
     PageDetailsComponent,
-    UserProfileComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +29,7 @@ import { RegisterComponent } from './register/register.component';
     FormsModule
 
   ],
-  providers: [SearchService, DetailsService],
+  providers: [SearchService, DetailsService, UserService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

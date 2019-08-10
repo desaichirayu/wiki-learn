@@ -54,7 +54,7 @@
     </div>
     <div class="col-lg-1 mx-auto"></div>
   </div>
-  <div [hidden]="!this.router.url.endsWith('/')" class="row mt-4 mb-4" style="bottom: 0">
+  <div [hidden]="(!this.router.url.endsWith('/')) || (user==null)" class="row mt-4 mb-4" style="bottom: 0">
     <div class="col-lg-1"></div>
     <div class="col-lg-10">
       <div class="card-columns">
@@ -141,37 +141,6 @@
       </div>
     </div>
     <div class="col-lg-1"></div>
-  </div>
-
-  <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-       aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body mx-3">
-          <div class="md-form mb-5">
-            <i class="fas fa-envelope prefix grey-text"></i>
-            <input [(ngModel)]="username" type="email" id="defaultForm-email" class="form-control validate">
-            <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>
-          </div>
-
-          <div class="md-form mb-4">
-            <i class="fas fa-lock prefix grey-text"></i>
-            <input [(ngModel)]="password" type="password" id="defaultForm-pass" class="form-control validate">
-            <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
-          </div>
-
-        </div>
-        <div class="modal-footer d-flex justify-content-center">
-          <button class="btn btn-default" (click)="doLogin(username, password)">Login</button>
-        </div>
-      </div>
-    </div>
   </div>
   <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
        aria-hidden="true">
