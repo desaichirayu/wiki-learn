@@ -30,7 +30,7 @@
     </div>
 </nav>
 <div class="container container-fluid">
-  <div [hidden]="this.router.url.includes('profile') || this.router.url.includes('login') || this.router.url.includes('register')" class="row mt-4 mb-4">
+  <div [hidden]="pageURL.includes('profile') || pageURL.includes('login') || pageURL.includes('register')" class="row mt-4 mb-4">
     <div class="col-lg-1 mx-auto">
 
     </div>
@@ -44,7 +44,7 @@
     </div>
     <div class="col-lg-1 mx-auto"></div>
   </div>
-  <div [hidden]="!this.router.url.endsWith('/')" class="row mt-4 mb-4">
+  <div [hidden]="!pageURL.endsWith('/')" class="row mt-4 mb-4">
     <div class="col-lg-1 mx-auto">
     </div>
     <div class="col-lg-10 mx-auto text-center">
@@ -54,7 +54,7 @@
     </div>
     <div class="col-lg-1 mx-auto"></div>
   </div>
-  <div [hidden]="(!this.router.url.endsWith('/')) || (user==null)" class="row mt-4 mb-4" style="bottom: 0">
+  <div [hidden]="(!pageURL.endsWith('/')) || (user==null)" class="row mt-4 mb-4" style="bottom: 0">
     <div class="col-lg-1"></div>
     <div class="col-lg-10">
       <div class="card-columns">
@@ -98,7 +98,7 @@
     </div>
     <div class="col-lg-1"></div>
   </div>
-  <div [hidden]="!this.router.url.endsWith('/')" class="row mt-4 mb-4" style="bottom: 0">
+  <div [hidden]="!pageURL.endsWith('/')" class="row mt-4 mb-4" style="bottom: 0">
     <div class="col-lg-1"></div>
     <div class="col-lg-10">
       <div class="card-columns">

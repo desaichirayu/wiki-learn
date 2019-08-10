@@ -14,22 +14,26 @@ import {CookieService} from "ngx-cookie-service";
 export class AppComponent implements OnInit{
   user = new User();
   title = 'wiki-learn';
+  pageURL: string;
   searchQuery = new SearchQuery('');
 
   constructor(private userService: UserService ,private router: Router, private cookieService: CookieService){
     // console.log("AppComponent: Constructor called");
     // this.userService.authenticate(this.cookieService.get("user")).then(response => this.user=response);
+    this.pageURL = this.router.url;
   }
 
 
   ngOnInit() {
     console.log("AppComponent: ngOnInit called");
     this.userService.authenticate(this.cookieService.get("user")).then(response => this.user=response);
+    this.pageURL = this.router.url;
   }
 
   checkSession(){
     console.log("AppComponent: Check Session called");
     this.userService.authenticate(this.cookieService.get("user")).then(response => this.user=response);
+    this.pageURL = this.router.url;
   }
 
   doLogout(){
