@@ -10,7 +10,7 @@ export class AppComponent {
   title = 'wiki-learn';
   searchQuery = new SearchQuery('');
   constructor(){
-    wiki().search('star wars').then(data => {
-      data.next().then(res=>console.log(res.results))});
+    // wiki().search('star wars').then(data => {
+    //   data.next().then(res=>console.log(res.results))});
   }
 }
