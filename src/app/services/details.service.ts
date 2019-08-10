@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {not} from 'rxjs/internal-compatibility';
 
 const wiki = require('wikijs').default;
 
@@ -38,8 +39,8 @@ export class DetailsService {
 
   URL_CREATE_NOTE = this.backendChoice + '/api/notes/pages/{pid}/users/{uid}/create';
   URL_GET_NOTE=this.backendChoice+'/api/pages/{pid}/notes';
-  URL_EDIT_NOTE;
-  URL_DELETE_NOTE;
+  URL_EDIT_NOTE=this.backendChoice+"/api/notes/{nid}";
+  URL_DELETE_NOTE=this.backendChoice+"/api/notes/{nid}";
 
   PAGE_ID = -1;
   PAGE_BASE_LIKES = -1;
@@ -231,6 +232,33 @@ export class DetailsService {
         'numberOfDisLikes':0
       })
     }).then(response => response.json());
+
+  }
+
+
+
+  deleteNote(nid){
+    return fetch(this.URL_DELETE_NOTE.replace("{nid}",nid),{
+      method: 'DELETE',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+
+  }
+
+
+  updateNote(nid,note){
+
+    return fetch(this.URL_EDIT_NOTE.replace("{nid}",nid),{
+      method: 'PUT',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body:JSON.stringify(note)
+    }).then(response=>response.json());
 
   }
 

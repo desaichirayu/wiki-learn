@@ -67,10 +67,22 @@
       <hr>
       <h3>Notes</h3>
       <hr>
-      <div *ngFor="let n of notes">
-        <p>{{n["content"]}}</p>
+      <div *ngFor="let n of notes; index as i">
+        <!--TODO--add user profile link in href-->
+
+        <a href="{{n['user']['id']}}"><b>{{n["user"]["username"]}}</b></a><br>
+        <div [ngSwitch]="this.editable[i]">
+          <textarea *ngSwitchCase="true" [(ngModel)]="n['content']"></textarea>
+          <p *ngSwitchDefault>{{n["content"]}}</p>
+        </div>
+        <button *ngIf="(n['userId']===this.userId)||(this.usertype==1)" class="btn btn-danger mb" (click)="deleteNote(n['id'])">Delete</button>
+        <button *ngIf="n['userId']===this.userId" class="btn btn-info mx-2 mb" (click)="editNote(i)">Edit</button>
+        <button *ngIf="(n['userId']===this.userId)&&(this.editable[i])" class="btn btn-info mx-2 mb" (click)="updateNote(n['content'],i)">Update</button>
         <hr>
       </div>
+
+
+
     </div>
     <div class="col-lg-3">
       <div class="card border-primary mb-3">
@@ -79,6 +91,11 @@
           <p class="card-text">
             <li *ngFor="let c of entities">
               {{c["name"]}}
+
+
+
+
+
             </li>
         </div>
       </div>

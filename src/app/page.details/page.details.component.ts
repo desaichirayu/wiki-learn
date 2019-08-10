@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {DetailsService} from "../services/details.service";
 
+import {not} from 'rxjs/internal-compatibility';
+
 @Component({
   selector: 'app-page.details',
   templateUrl: './page.details.component.html',
@@ -22,11 +24,14 @@ export class PageDetailsComponent implements OnInit {
 
   //TODO:change
   userId = 1;
+  //TODO:change
+  usertype = 1;
 
   validLike = false;
   validDislike = false;
 
-  notes = ["hello","how are you"];
+  notes = [];
+  editable = [];
 
 
 
@@ -47,6 +52,7 @@ export class PageDetailsComponent implements OnInit {
           this.detailsService.getNotes(this.pageId).then(response=>{
 
             this.notes = response;
+            this.editable=[].fill(false,0,this.notes.length);
 
           })
 
@@ -80,6 +86,8 @@ export class PageDetailsComponent implements OnInit {
     });
   };
 
+
+
   addNote = () =>{
     this.detailsService.postNote(this.userId,this.pageId,this.usernote).then(note=>
     {
@@ -88,6 +96,36 @@ export class PageDetailsComponent implements OnInit {
   };
 
 
+  deleteNote = (nid) => {
+
+    this.detailsService.deleteNote(nid).then(()=>{
+      this.detailsService.getNotes(this.pageId).then(response=>{
+        this.notes = response;
+        this.editable=[].fill(false,0,this.notes.length);
+      })
+    });
+
+
+  };
+
+  updateNote = (content,i)=>{
+
+    var notei = this.notes[i];
+    var nid = notei['id'];
+    notei["content"]=content;
+    this.editable[i]=false;
+    this.detailsService.updateNote(notei,nid).then(note=>{
+
+      this.notes[i]=note;
+
+    })
+
+  };
+
+  editNote=(i)=>{
+
+    this.editable[i]=true;
+  }
 
 
 
