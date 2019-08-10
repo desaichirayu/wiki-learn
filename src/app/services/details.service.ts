@@ -7,38 +7,37 @@ const wiki = require('wikijs').default;
 })
 export class DetailsService {
 
-  constructor() {}
+  constructor() {
+  }
 
   URL_SUMMARY_SERVICE = 'https://en.wikipedia.org/w/api.php?action=query';
   OPTIONS_FOR_SUMMARY = '&format=json&origin=*&formatversion=2&prop=pageimages|pageterms&piprop=thumbnail&pithumbsize=600&pilicense=any&titles=';
 
-  HOST_NER_LOCAL = "http://localhost:5000";
-  HOST_NER_REMOTE = "";
+  HOST_NER_LOCAL = 'http://localhost:5000';
+  HOST_NER_REMOTE = '';
   nerChoice = this.HOST_NER_LOCAL;
 
-  URL_NER_SERVICE = this.nerChoice+"/entities";
+  URL_NER_SERVICE = this.nerChoice + '/entities';
 
-  HOST_BACKEND_LOCAL = "http://localhost:8080";
-  HOST_BACKEND_REMOTE = "";
+  HOST_BACKEND_LOCAL = 'http://localhost:8080';
+  HOST_BACKEND_REMOTE = '';
 
   backendChoice = this.HOST_BACKEND_LOCAL;
 
-  URL_FIND_PAGE=this.backendChoice+"/api/pages/search?q=";
-  URL_CREATE_PAGE=this.backendChoice+"/api/pages";
+  URL_FIND_PAGE = this.backendChoice + '/api/pages/search?q=';
+  URL_CREATE_PAGE = this.backendChoice + '/api/pages';
 
 
-
-  URL_CREATE_TAGS= this.backendChoice+"/api/pages/{pid}/tags";
-  URL_GET_TAGS = this.backendChoice+"/api/pages/{pid}/tags";
-
+  URL_CREATE_TAGS = this.backendChoice + '/api/pages/{pid}/tags';
+  URL_GET_TAGS = this.backendChoice + '/api/pages/{pid}/tags';
 
 
-  URL_LIKE_ACTION = this.backendChoice+"/api/users/{uid}/like/{pid}";
-  URL_DISLIKE_ACTION = this.backendChoice+"/api/users/{uid}/dislike/{pid}";
+  URL_LIKE_ACTION = this.backendChoice + '/api/users/{uid}/like/{pid}';
+  URL_DISLIKE_ACTION = this.backendChoice + '/api/users/{uid}/dislike/{pid}';
 
 
-  URL_CREATE_NOTE;
-  URL_GET_NOTE;
+  URL_CREATE_NOTE = this.backendChoice + '/api/notes/pages/{pid}/users/{uid}/create';
+  URL_GET_NOTE=this.backendChoice+'/api/pages/{pid}/notes';
   URL_EDIT_NOTE;
   URL_DELETE_NOTE;
 
@@ -48,167 +47,192 @@ export class DetailsService {
   PAGE_TAGS = [];
 
 
-  getReturnData(){return {"id":this.PAGE_ID,"likes":this.PAGE_BASE_LIKES,"dislikes":this.PAGE_BASE_DISLIKES,"entities":this.PAGE_TAGS};}
+  getReturnData() {
+    return {'id': this.PAGE_ID, 'likes': this.PAGE_BASE_LIKES, 'dislikes': this.PAGE_BASE_DISLIKES, 'entities': this.PAGE_TAGS};
+  }
 
   //PAGES==========================
-  findPageExists(title,summary){
+  findPageExists(title, summary) {
 
-    return fetch(this.URL_FIND_PAGE+title)
-      .then(response=>response.text())
-      .then(response=>{
-      if(response.length>0){
-        //exists in db
-        var jresponse = JSON.parse(response);
-        console.log(jresponse);
-        this.PAGE_ID = jresponse["id"];
-        this.PAGE_BASE_LIKES = jresponse["numberOfLikes"];
-        this.PAGE_BASE_DISLIKES = jresponse["numberOfDisLikes"];
-        return this.getEntitiesFromDB(this.PAGE_ID).then(
-          response=>{
-            console.log(response);
-            this.PAGE_TAGS = response;
-            return this.getReturnData();
-          }
-        )
-      }
-      else {
-        return fetch(this.URL_CREATE_PAGE,{
-          method:"POST",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            "title":title,
-            "numberOfLikes":0,
-            "numberOfDisLikes":0,
-            "numberOfViews":1
-            })
-        }).then(response=>response.json()).then(response=>{
+    return fetch(this.URL_FIND_PAGE + title)
+      .then(response => response.text())
+      .then(response => {
+        if (response.length > 0) {
+          //exists in db
+          var jresponse = JSON.parse(response);
+          console.log(jresponse);
+          this.PAGE_ID = jresponse['id'];
+          this.PAGE_BASE_LIKES = jresponse['numberOfLikes'];
+          this.PAGE_BASE_DISLIKES = jresponse['numberOfDisLikes'];
 
-          console.log(response);
-          this.PAGE_ID = response["id"];
-          this.PAGE_BASE_LIKES = response["numberOfLikes"];
-          this.PAGE_BASE_DISLIKES = response["numberOfDisLikes"];
-          return this.getEntitiesFromRemote(title,summary).then(
-            response=>{
-              this.PAGE_TAGS = response;
+
+
+          return this.getEntitiesFromDB(this.PAGE_ID).then(
+            response => {
               console.log(response);
-              response.map(tag=>this.createEntity(this.PAGE_ID,tag));
+              this.PAGE_TAGS = response;
               return this.getReturnData();
-
             }
-          )
-          }
+          );
+        } else {
+          return fetch(this.URL_CREATE_PAGE, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              'title': title,
+              'numberOfLikes': 0,
+              'numberOfDisLikes': 0,
+              'numberOfViews': 1
+            })
+          }).then(response => response.json()).then(response => {
 
-        )
+              console.log(response);
+              this.PAGE_ID = response['id'];
+              this.PAGE_BASE_LIKES = response['numberOfLikes'];
+              this.PAGE_BASE_DISLIKES = response['numberOfDisLikes'];
+              return this.getEntitiesFromRemote(title, summary).then(
+                response => {
+                  this.PAGE_TAGS = response;
+                  console.log(response);
+                  response.map(tag => this.createEntity(this.PAGE_ID, tag));
+                  return this.getReturnData();
 
-      }
-    })
+                }
+              );
+            }
+          );
+
+        }
+      });
 
   }
 
 
+  getNotes(pid){
 
-  postLike(userId,pageId){
-
-    return fetch(this.URL_LIKE_ACTION.replace("{uid}",userId).replace("{pid}",pageId),{
-      method:"PUT",
-      mode:"cors",
+    return fetch(this.URL_GET_NOTE.replace("{pid}",pid),{
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       }
     }).then(response=>response.json());
+
   }
 
+  postLike(userId, pageId) {
 
-
-
-  postDislike(userId,pageId){
-
-    return fetch(this.URL_DISLIKE_ACTION.replace("{uid}",userId).replace("{pid}",pageId),{
-      method:"PUT",
-      mode:"cors",
+    return fetch(this.URL_LIKE_ACTION.replace('{uid}', userId).replace('{pid}', pageId), {
+      method: 'PUT',
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       }
-    }).then(response=>response.json());
+    }).then(response => response.json());
+  }
+
+
+  postDislike(userId, pageId) {
+
+    return fetch(this.URL_DISLIKE_ACTION.replace('{uid}', userId).replace('{pid}', pageId), {
+      method: 'PUT',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).then(response => response.json());
 
   }
 
 
-
-  getSummary(title){
-    return wiki().page(title).then(page=>page.summary())
+  getSummary(title) {
+    return wiki().page(title).then(page => page.summary());
   }
 
-  getPageImageURL(title){
+  getPageImageURL(title) {
     return fetch(this.URL_SUMMARY_SERVICE + this.OPTIONS_FOR_SUMMARY + title)
-      .then(resp => resp.json()).then(rj =>
-      {
-        if(rj.query.pages[0].thumbnail!=null)
-        {
-        return rj.query.pages[0].thumbnail.source}
-      return null});
+      .then(resp => resp.json()).then(rj => {
+        if (rj.query.pages[0].thumbnail != null) {
+          return rj.query.pages[0].thumbnail.source;
+        }
+        return null;
+      });
 
   }
 
 
-  entityHelper(entityString){
+  entityHelper(entityString) {
 
-    var en = entityString.split("::");
-    return {"name": en[0], "type": en[1], "nametype": en[0] + "::" + en[1]};
+    var en = entityString.split('::');
+    return {'name': en[0], 'type': en[1], 'nametype': en[0] + '::' + en[1]};
 
   }
 
 
-  getEntitiesFromDB(pageId){
-    return fetch(this.URL_GET_TAGS.replace("{pid}",pageId),{
-      method:"GET",
-      mode:"cors",
-    }).then(response=>response.json()).
-    then(
-      response=>{
+  getEntitiesFromDB(pageId) {
+    return fetch(this.URL_GET_TAGS.replace('{pid}', pageId), {
+      method: 'GET',
+      mode: 'cors',
+    }).then(response => response.json()).then(
+      response => {
         return response;
       }
-    )
+    );
   }
 
-  getEntitiesFromRemote(title,summary){
+  getEntitiesFromRemote(title, summary) {
 
-    return fetch(this.URL_NER_SERVICE,{
-      method:"POST",
-      mode:"cors",
+    return fetch(this.URL_NER_SERVICE, {
+      method: 'POST',
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "url":title,
-        "content":summary})
-    }).then(response=>response.json()).then(
-      response=>{
-        return response["entities"].map(e => this.entityHelper(e));
+        'url': title,
+        'content': summary
+      })
+    }).then(response => response.json()).then(
+      response => {
+        return response['entities'].map(e => this.entityHelper(e));
       }
-
-    )
+    );
   }
 
-  createEntity(pid,entity){
+  createEntity(pid, entity) {
     console.log(entity);
-    fetch(this.URL_CREATE_TAGS.replace("{pid}",pid),{
-      method:"POST",
-      mode:"cors",
+    fetch(this.URL_CREATE_TAGS.replace('{pid}', pid), {
+      method: 'POST',
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(entity)
-    }).then(response=>response.json()).then(
-      response=>{
+    }).then(response => response.json()).then(
+      response => {
         return response;
       }
     );
 
   }
 
+  postNote(uid, pid, content) {
+    return fetch(this.URL_CREATE_NOTE.replace('{pid}', pid).replace('{uid}', uid), {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        'content': content,
+        'created':new Date(),
+        'numberOfLikes':0,
+        'numberOfDisLikes':0
+      })
+    }).then(response => response.json());
+
+  }
 
 
 }

@@ -18,12 +18,15 @@ export class PageDetailsComponent implements OnInit {
   likeCount = 0;
   dislikeCount = 0;
   pageId = -1;
+  usernote = '';
 
   //TODO:change
   userId = 1;
 
   validLike = false;
   validDislike = false;
+
+  notes = ["hello","how are you"];
 
 
 
@@ -41,9 +44,17 @@ export class PageDetailsComponent implements OnInit {
           this.pageId = coll["id"];
           this.entities = coll["entities"];
 
+          this.detailsService.getNotes(this.pageId).then(response=>{
+
+            this.notes = response;
+
+          })
+
+
+
+
         });
       });
-
 
 
       this.detailsService.getPageImageURL(this.title).then(url => this.imageURL = url);
@@ -52,6 +63,8 @@ export class PageDetailsComponent implements OnInit {
 
     })
   }
+
+
 
   likePage = () =>{
     this.detailsService.postLike(this.userId,this.pageId).then(upvotes=>{
@@ -68,7 +81,10 @@ export class PageDetailsComponent implements OnInit {
   };
 
   addNote = () =>{
-    //
+    this.detailsService.postNote(this.userId,this.pageId,this.usernote).then(note=>
+    {
+      this.notes.push(note);
+    })
   };
 
 

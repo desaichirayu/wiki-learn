@@ -39,9 +39,6 @@
         </button>
         <br>
         {{dislikeCount}}
-        <button class="material-icons md-48 mx-1" (click)="addNote()">
-          note_add
-        </button>
       </div>
     </div>
     </div>
@@ -58,6 +55,21 @@
             </div>
           </div>
         </div>
+      </div>
+      <hr>
+      <form>
+        <div class="form-group">
+          <textarea name="input-for-usernote" class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="usernote">Your Note...</textarea>
+          <br>
+          <button type="submit" class="btn btn-primary" (click)="addNote()">Submit</button>
+        </div>
+      </form>
+      <hr>
+      <h3>Notes</h3>
+      <hr>
+      <div *ngFor="let n of notes">
+        <p>{{n["content"]}}</p>
+        <hr>
       </div>
     </div>
     <div class="col-lg-3">
