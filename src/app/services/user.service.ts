@@ -117,4 +117,32 @@ export class UserService {
   getUserIpAddress() {
     return fetch('https://api.ipify.org/?format=json').then(response => response.json());
   }
+
+  findUserByUserName(username){
+    return fetch(serverUrl + '/api/users/un/' + username).then(response =>  response.json());
+  }
+
+  findUserById(userId){
+    return fetch(serverUrl + '/api/users/' + userId).then(response => response.json());
+  }
+
+  findRecentUsers(){
+    return fetch( serverUrl + '/api/users/recent').then(response => response.json());
+  }
+
+  findRecentLikedPagesForUser(userId){
+    return fetch(serverUrl + '/api/users/' + userId + '/likedpagestitles').then(response => response.json());
+  }
+
+  updateUserEmail(userId, userEmail){
+    return fetch(serverUrl + '/api/users/' + userId + '/updateemail/' + userEmail, {
+      method: 'PUT'
+    }).then(response => response.json());
+  }
+
+  updateUserPhone(userId, userPhone){
+    return fetch(serverUrl + '/api/users/' + userId + '/updatephone/' + userPhone, {
+      method: 'PUT'
+    }).then(response => response.json());
+  }
 }

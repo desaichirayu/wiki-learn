@@ -29,8 +29,13 @@ export class RegisterComponent implements OnInit {
     this.userService.register({firstName: firstName, lastName: lastName, email: email, phone: phone, username: username, password: password, role: role, ipAddress: this.ipAddress})
       .then(response => {
         console.log(response);
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-          this.router.navigate(['/login']));
+        if(response.status == 500){
+          alert("Sign-up Failed, username already exists");
+          this.router.navigate(['/register']);
+        } else{
+          this.router.navigate(['/login']);
+        }
+        // this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
       })
   }
 

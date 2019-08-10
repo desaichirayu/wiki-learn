@@ -12,7 +12,8 @@ const routes: Routes = [
   {path:"details/:title",component:PageDetailsComponent},
   {path:"login", component:LoginComponent},
   {path:"register", component:RegisterComponent},
-  {path:"profile", component: ProfileComponent}
+  {path:"profile", component: ProfileComponent},
+  {path:"profile/:pid", component: ProfileComponent}
 ];
 
 @NgModule({
