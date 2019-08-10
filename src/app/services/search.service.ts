@@ -8,6 +8,6 @@ export class SearchService {
   constructor() { }
 
   doSearch(query){
-    return wiki().search(query);
+    return wiki().search(query, 10);
   }
 }

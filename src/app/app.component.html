@@ -1,17 +1,84 @@
-<div class="container container-fluid">
-  <div class="row mt-4 mb-4">
-    <div class="col-lg-1 mx-auto">
-      <img src="../assets/images/wikipedia_logo.png" alt="wikipedia logo" class="float-right" style="height: 40px; width: 40px"/>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-dark text-white">
+    <a class="navbar-brand font-weight-bold text-white" (click)="navigateHome()"><img src="../assets/images/wiki_search.png" height="40" width="40"/>Wiki Learn</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="btn btn-outline-secondary mp-2 btn-block" style="color: inherit" (click)="navigateHome()">Home</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav float-right">
+        <li [hidden]="user != null" class="nav-item mr-4">
+          <a class="btn btn-outline-secondary mp-2 btn-block" style="color: inherit" routerLink="/login">Login</a>
+        </li>
+
+        <li [hidden]="user != null" class="nav-item mr-4">
+          <a class="btn btn-outline-secondary mp-2 btn-block" style="color: inherit" routerLink="/register">Sign Up</a>
+        </li>
+
+        <li [hidden]="user == null" class="nav-item dropdown mr-4">
+          <a class="btn btn-outline-secondary mp-2 btn-block nav-link dropdown-toggle" style="color:inherit;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{userFN}}&nbsp;{{userLN}}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" routerLink="/profile">Profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" (click)="doLogout()">Logout</a>
+          </div>
+        </li>
+      </ul>
     </div>
-    <div class="col-lg-10 mx-auto">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Enter Search Phrase" [(ngModel)]="searchQuery.query">
-        <span class="input-group-btn">
+  </nav>
+</header>
+<main>
+  <div class="container-fluid">
+    <div [hidden]="pageURL.includes('profile') || pageURL.includes('login') || pageURL.includes('register') || pageURL.includes('details')" class="row mt-4 mb-4">
+      <div class="col-lg-2 mx-auto">
+      </div>
+      <div class="col-lg-8 mx-auto">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Enter Search Phrase" [(ngModel)]="searchQuery.query">
+          <span class="input-group-btn">
                     <a class="btn btn-outline-secondary" type="button" id="button-addon2" routerLink="/search/{{searchQuery.query}}">Search</a>
                 </span>
+        </div>
+      </div>
+      <div class="col-lg-2 mx-auto"></div>
+    </div>
+    <div class="row mt-4 mb-4">
+      <div class="col-lg-2 mx-auto">
+        <div [hidden]="!pageURL.endsWith('/')" class="card">
+          <h6 class="p-2 ml-2">Trending Users</h6>
+          <div>
+            <ul *ngFor="let user of recentUsers" class="list-group">
+              <li class="list-group-item "><a routerLink="/profile/{{user.id}}" style="color: inherit">{{user.firstName}}&nbsp;{{user.lastName}}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 mx-auto text-center">
+        <div [hidden]="!pageURL.endsWith('/')">
+          <h2>Welcome to Wiki Learn!</h2>
+          <span class="d-none d-md-inline">
+            <img src="../assets/images/group.png"/>
+          </span>
+          <h5>Go Ahead Search Something..</h5>
+        </div>
+      </div>
+      <div class="col-lg-2 mx-auto">
+        <div [hidden]="(!pageURL.endsWith('/')) || (user == null)" class="card">
+          <h6 class="p-2 ml-2">Your Recently Liked Pages</h6>
+          <div>
+            <ul *ngFor="let page of recentLikedPages" class="list-group">
+              <li class="list-group-item "><a routerLink="/details/{{page}}" style="color: inherit">{{page}}</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-lg-1 mx-auto"></div>
   </div>
-</div>
-<router-outlet></router-outlet>
+</main>
+<router-outlet (activate)="checkSession()"></router-outlet>

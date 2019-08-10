@@ -9,20 +9,29 @@ import {SearchService} from "./services/search.service";
 import { PageDetailsComponent } from './page.details/page.details.component';
 import {DetailsService} from "./services/details.service";
 import { TagresultsComponent } from './tagresults/tagresults.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
+import {UserService} from "./services/user.service";
+import {CookieService} from "ngx-cookie-service";
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchResultsComponent,
     PageDetailsComponent,
-    TagresultsComponent
+    TagresultsComponent,
+    LoginComponent,
+    RegisterComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
+
   ],
-  providers: [SearchService, DetailsService],
+  providers: [SearchService, DetailsService, UserService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

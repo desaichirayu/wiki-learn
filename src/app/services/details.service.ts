@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
 import {not} from 'rxjs/internal-compatibility';
 import {async} from 'q';
-
+import * as constants from '../constants';
 const wiki = require('wikijs').default;
+
+const serverUrl = constants.SERVER_URL;
 
 @Injectable({
   providedIn: 'root'
@@ -139,6 +141,7 @@ export class DetailsService {
 
   postDislike(userId, pageId) {
 
+
     return fetch(this.URL_DISLIKE_ACTION.replace('{uid}', userId).replace('{pid}', pageId), {
       method: 'PUT',
       mode: 'cors',
@@ -267,5 +270,9 @@ export class DetailsService {
 
   }
 
+
+  getRecentPages(){
+    return fetch(serverUrl + '/api/pages/recent').then(response => response.json());
+  }
 
 }
