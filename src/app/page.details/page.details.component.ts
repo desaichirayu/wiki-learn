@@ -14,7 +14,7 @@ export class PageDetailsComponent implements OnInit {
   title = '';
   summary = '';
   imageURL = '';
-  entities = '';
+  entities = [];
   likeCount = 0;
   dislikeCount = 0;
   pageId = -1;
@@ -26,27 +26,28 @@ export class PageDetailsComponent implements OnInit {
   validDislike = false;
 
 
+
+
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       this.title = params.title;
       this.detailsService.getSummary(this.title).then(summary => {
         this.summary = summary;
-        // this.detailsService.getEntities(this.title,summary).then(entities =>{
-        //   this.entities=entities["entities"]
-        // });
+        this.detailsService.findPageExists(params.title,summary).then(coll=>{
+
+          console.log(coll);
+          this.likeCount = coll["likes"];
+          this.dislikeCount = coll["dislikes"];
+          this.pageId = coll["id"];
+          this.entities = coll["entities"];
+
+        });
       });
 
 
 
       this.detailsService.getPageImageURL(this.title).then(url => this.imageURL = url);
-      this.detailsService.findPageExists(params.title).then(coll=>{
 
-        console.log(coll);
-        this.likeCount = coll["likes"];
-        this.dislikeCount = coll["dislikes"];
-        this.pageId = coll["id"];
-
-      });
 
 
     })

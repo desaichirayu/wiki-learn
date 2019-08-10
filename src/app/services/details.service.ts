@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+
 const wiki = require('wikijs').default;
 
 @Injectable({
@@ -11,7 +12,7 @@ export class DetailsService {
   URL_SUMMARY_SERVICE = 'https://en.wikipedia.org/w/api.php?action=query';
   OPTIONS_FOR_SUMMARY = '&format=json&origin=*&formatversion=2&prop=pageimages|pageterms&piprop=thumbnail&pithumbsize=600&pilicense=any&titles=';
 
-  HOST_NER_LOCAL = "";
+  HOST_NER_LOCAL = "http://localhost:5000";
   HOST_NER_REMOTE = "";
   nerChoice = this.HOST_NER_LOCAL;
 
@@ -24,15 +25,16 @@ export class DetailsService {
 
   URL_FIND_PAGE=this.backendChoice+"/api/pages/search?q=";
   URL_CREATE_PAGE=this.backendChoice+"/api/pages";
-  URL_CREATE_TAGS;
-  URL_GET_TAGS;
 
 
-  URL_NOTIFICATIONS;
 
-  URL_LIKE_ACTION = this.backendChoice+"/api/users";
+  URL_CREATE_TAGS= this.backendChoice+"/api/pages/{pid}/tags";
+  URL_GET_TAGS = this.backendChoice+"/api/pages/{pid}/tags";
 
-  URL_DISLIKE_ACTION = this.backendChoice+"/api/users";
+
+
+  URL_LIKE_ACTION = this.backendChoice+"/api/users/{uid}/like/{pid}";
+  URL_DISLIKE_ACTION = this.backendChoice+"/api/users/{uid}/dislike/{pid}";
 
 
   URL_CREATE_NOTE;
@@ -43,12 +45,13 @@ export class DetailsService {
   PAGE_ID = -1;
   PAGE_BASE_LIKES = -1;
   PAGE_BASE_DISLIKES = -1;
+  PAGE_TAGS = [];
 
 
-  getReturnData(){return {"id":this.PAGE_ID,"likes":this.PAGE_BASE_LIKES,"dislikes":this.PAGE_BASE_DISLIKES};}
+  getReturnData(){return {"id":this.PAGE_ID,"likes":this.PAGE_BASE_LIKES,"dislikes":this.PAGE_BASE_DISLIKES,"entities":this.PAGE_TAGS};}
 
   //PAGES==========================
-  findPageExists(title){
+  findPageExists(title,summary){
 
     return fetch(this.URL_FIND_PAGE+title)
       .then(response=>response.text())
@@ -60,7 +63,13 @@ export class DetailsService {
         this.PAGE_ID = jresponse["id"];
         this.PAGE_BASE_LIKES = jresponse["numberOfLikes"];
         this.PAGE_BASE_DISLIKES = jresponse["numberOfDisLikes"];
-        return this.getReturnData();
+        return this.getEntitiesFromDB(this.PAGE_ID).then(
+          response=>{
+            console.log(response);
+            this.PAGE_TAGS = response;
+            return this.getReturnData();
+          }
+        )
       }
       else {
         return fetch(this.URL_CREATE_PAGE,{
@@ -80,7 +89,15 @@ export class DetailsService {
           this.PAGE_ID = response["id"];
           this.PAGE_BASE_LIKES = response["numberOfLikes"];
           this.PAGE_BASE_DISLIKES = response["numberOfDisLikes"];
-          return this.getReturnData();
+          return this.getEntitiesFromRemote(title,summary).then(
+            response=>{
+              this.PAGE_TAGS = response;
+              console.log(response);
+              response.map(tag=>this.createEntity(this.PAGE_ID,tag));
+              return this.getReturnData();
+
+            }
+          )
           }
 
         )
@@ -88,18 +105,13 @@ export class DetailsService {
       }
     })
 
-
-
-
-
-
   }
 
 
 
   postLike(userId,pageId){
 
-    return fetch(this.URL_LIKE_ACTION+"/"+userId+"/like/"+pageId,{
+    return fetch(this.URL_LIKE_ACTION.replace("{uid}",userId).replace("{pid}",pageId),{
       method:"PUT",
       mode:"cors",
       headers: {
@@ -113,7 +125,7 @@ export class DetailsService {
 
   postDislike(userId,pageId){
 
-    return fetch(this.URL_DISLIKE_ACTION+"/"+userId+"/dislike/"+pageId,{
+    return fetch(this.URL_DISLIKE_ACTION.replace("{uid}",userId).replace("{pid}",pageId),{
       method:"PUT",
       mode:"cors",
       headers: {
@@ -140,7 +152,28 @@ export class DetailsService {
 
   }
 
-  getEntities(title,summary){
+
+  entityHelper(entityString){
+
+    var en = entityString.split("::");
+    return {"name": en[0], "type": en[1], "nametype": en[0] + "::" + en[1]};
+
+  }
+
+
+  getEntitiesFromDB(pageId){
+    return fetch(this.URL_GET_TAGS.replace("{pid}",pageId),{
+      method:"GET",
+      mode:"cors",
+    }).then(response=>response.json()).
+    then(
+      response=>{
+        return response;
+      }
+    )
+  }
+
+  getEntitiesFromRemote(title,summary){
 
     return fetch(this.URL_NER_SERVICE,{
       method:"POST",
@@ -151,9 +184,30 @@ export class DetailsService {
       body: JSON.stringify({
         "url":title,
         "content":summary})
-    }).then(response=>response.json())
+    }).then(response=>response.json()).then(
+      response=>{
+        return response["entities"].map(e => this.entityHelper(e));
+      }
+
+    )
   }
 
+  createEntity(pid,entity){
+    console.log(entity);
+    fetch(this.URL_CREATE_TAGS.replace("{pid}",pid),{
+      method:"POST",
+      mode:"cors",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(entity)
+    }).then(response=>response.json()).then(
+      response=>{
+        return response;
+      }
+    );
+
+  }
 
 
 
