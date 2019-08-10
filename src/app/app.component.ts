@@ -3,6 +3,7 @@ import {SearchQuery} from './search-query';
 import {Router} from "@angular/router";
 import {User} from "./models/user.model.client";
 import {UserService} from "./services/user.service";
+import {CookieService} from "ngx-cookie-service";
 
 
 @Component({
@@ -11,34 +12,29 @@ import {UserService} from "./services/user.service";
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit{
-
-  constructor(private userService: UserService ,private router: Router){
-
-  }
-  title = 'wiki-learn';
   user = new User();
-  username = '';
-  password = '';
-  authenticated= false;
+  title = 'wiki-learn';
   searchQuery = new SearchQuery('');
 
+  constructor(private userService: UserService ,private router: Router, private cookieService: CookieService){
+    // console.log("AppComponent: Constructor called");
+    // this.userService.authenticate(this.cookieService.get("user")).then(response => this.user=response);
+  }
+
+
   ngOnInit() {
-    this.userService.authenticate(this.user).then(response => this.userService.setAuthenticated(response));
+    console.log("AppComponent: ngOnInit called");
+    this.userService.authenticate(this.cookieService.get("user")).then(response => this.user=response);
   }
 
   checkSession(){
-    console.log("Checking session");
-    this.userService.authenticate(this.user).then(response => this.authenticated=response);
-  }
-
-  doLogin(username, password){
-    this.user.username = username;
-    this.user.password = password;
-    this.userService.login(JSON.stringify(this.user)).then(response => this.user = response);
+    console.log("AppComponent: Check Session called");
+    this.userService.authenticate(this.cookieService.get("user")).then(response => this.user=response);
   }
 
   doLogout(){
-    console.log(this.user);
     this.userService.logout(JSON.stringify(this.user)).then(() => {this.user = new User()});
+    this.router.navigateByUrl('/login', {skipLocationChange: true}).then(()=>
+      this.router.navigate(['/']));
   }
 }
