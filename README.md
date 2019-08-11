@@ -84,3 +84,26 @@ This returns a query result which contains the thumbnail url as shown below:
 }
 ```
 This happens in the background along with the summary to populate the */details* page.
+
+
+### Installation Instructions:
+
+### Client :: https://github.com/desaichirayu/wiki-learn/releases/tag/1.0
+* run ```npm install```
+* replace urls in constants/index.js file with local urls
+* run ```ng serve```
+
+### Server:: https://github.com/shiredude95/wiki-learn-server/tree/v0.1
+* run ```mvn clean install```
+* make sure to install mysql and ensure it is running.
+* change application.properties to point to local db
+* run ```mvn sprint:boot run```
+
+### NLP TAG Service :: https://github.com/shiredude95/entity-service/tree/v1.0
+* run ```pip install -r requirements.txt```
+* run ```python server.py```
+
+
+
+
+
