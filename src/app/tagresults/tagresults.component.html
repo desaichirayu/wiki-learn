@@ -1,19 +1,10 @@
 <div class="container-fluid">
-
-  <div>
-
-    <h3>Tag:{{this.tname}}</h3>
-
-    <ul>
-
+  <div class="card border-primary mb-3" >
+    <div class="card-header">Tag:{{this.tname}}</div>
+    <div class="card-body text-primary">
       <li *ngFor="let p of pages">
-
         <a routerLink="/details/{{p['title']}}">{{p['title']}}</a>
-
       </li>
-
-    </ul>
-
+    </div>
   </div>
-
 </div>

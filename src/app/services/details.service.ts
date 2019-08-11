@@ -26,7 +26,7 @@ export class DetailsService {
   HOST_BACKEND_LOCAL = 'http://localhost:8080';
   HOST_BACKEND_REMOTE = serverUrl;
 
-  backendChoice = this.HOST_BACKEND_REMOTE;
+  backendChoice = this.HOST_BACKEND_LOCAL;
 
   URL_FIND_PAGE = this.backendChoice + '/api/pages/search?q=';
   URL_CREATE_PAGE = this.backendChoice + '/api/pages';
