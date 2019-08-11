@@ -5,6 +5,7 @@ import * as constants from '../constants';
 const wiki = require('wikijs').default;
 
 const serverUrl = constants.SERVER_URL;
+const nlpServerUrl = constants.NLP_SERVER_URL;
 
 @Injectable({
   providedIn: 'root'
@@ -17,16 +18,14 @@ export class DetailsService {
   URL_SUMMARY_SERVICE = 'https://en.wikipedia.org/w/api.php?action=query';
   OPTIONS_FOR_SUMMARY = '&format=json&origin=*&formatversion=2&prop=pageimages|pageterms&piprop=thumbnail&pithumbsize=600&pilicense=any&titles=';
 
-  HOST_NER_LOCAL = 'http://localhost:5000';
-  HOST_NER_REMOTE = 'https://rocky-ocean-10939.herokuapp.com';
+  HOST_NER_REMOTE = nlpServerUrl;
   nerChoice = this.HOST_NER_REMOTE;
 
   URL_NER_SERVICE = this.nerChoice + '/entities';
 
-  HOST_BACKEND_LOCAL = 'http://localhost:8080';
   HOST_BACKEND_REMOTE = serverUrl;
 
-  backendChoice = this.HOST_BACKEND_LOCAL;
+  backendChoice = this.HOST_BACKEND_REMOTE;
 
   URL_FIND_PAGE = this.backendChoice + '/api/pages/search?q=';
   URL_CREATE_PAGE = this.backendChoice + '/api/pages';
