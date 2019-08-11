@@ -8,6 +8,7 @@ import {FormsModule} from '@angular/forms';
 import {SearchService} from "./services/search.service";
 import { PageDetailsComponent } from './page.details/page.details.component';
 import {DetailsService} from "./services/details.service";
+import { TagresultsComponent } from './tagresults/tagresults.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -19,6 +20,7 @@ import {CookieService} from "ngx-cookie-service";
     AppComponent,
     SearchResultsComponent,
     PageDetailsComponent,
+    TagresultsComponent,
     LoginComponent,
     RegisterComponent,
     ProfileComponent

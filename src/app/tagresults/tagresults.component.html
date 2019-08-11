@@ -1,0 +1,19 @@
+<div class="container-fluid">
+
+  <div>
+
+    <h3>Tag:{{this.tname}}</h3>
+
+    <ul>
+
+      <li *ngFor="let p of pages">
+
+        <a routerLink="/details/{{p['title']}}">{{p['title']}}</a>
+
+      </li>
+
+    </ul>
+
+  </div>
+
+</div>

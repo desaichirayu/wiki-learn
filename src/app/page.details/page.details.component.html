@@ -1,8 +1,22 @@
-<div class="container container-fluid">
-  <div class="row mt-4 mb-4">
-    <div class="col-lg-1 mx-auto">
+<div class="container-fluid">
+  <div class="row">
+
+
+    <div class="col-lg-1" [hidden]="userId==-1">
+        <div class="row mt-2 justify-content-center">
+          <button class="material-icons md-48 mx-1" (click)="likePage()">
+            thumb_up
+          </button>
+          <br>
+          <b><i>{{likeCount}}</i></b>
+          <button class="material-icons md-48 mx-1" (click)="dislikePage()">
+            thumb_down
+          </button>
+          <br>
+          <b><i>{{dislikeCount}}</i></b>
+        </div>
     </div>
-    <div class="col-lg-10 mx-auto">
+    <div class="col-lg-8">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">{{title}}</h5>
@@ -16,7 +30,51 @@
           </div>
         </div>
       </div>
+      <hr>
+      <form  [hidden]="userId==-1">
+        <div class="form-group">
+          <textarea name="input-for-usernote" class="form-control" id="usernoteText" placeholder="Add a Note..." rows="3" [(ngModel)]="usernote">Your Note...</textarea>
+          <br>
+          <button type="submit" class="btn btn-primary" (click)="addNote()">Submit</button>
+        </div>
+      </form>
+      <hr>
+
+
+
+      <div [hidden]="userId==-1">
+      <h3>Notes</h3>
+      <hr>
+      <div *ngFor="let n of notes; index as i" >
+        <!--TODO--add user profile link in href-->
+
+        <a href="/profile/{{n['user']['id']}}"><b>{{n["user"]["username"]}}</b></a> posted at: <i>{{this.getUTC(n['created'])}}</i>
+        <div [ngSwitch]="this.editable[i]">
+          <textarea *ngSwitchCase="true" [(ngModel)]="n['content']"></textarea>
+          <p *ngSwitchDefault>{{n["content"]}}</p>
+        </div>
+        <b *ngIf="(n['userId']===this.userId)||(this.usertype==1)" (click)="deleteNote(n['id'])" style="cursor: pointer"><u>Delete</u></b>
+        <b *ngIf="n['userId']===this.userId"  (click)="editNote(i)" class="mx-2" style="cursor: pointer"><u>Edit</u></b>
+        <b *ngIf="(n['userId']===this.userId)&&(this.editable[i])" (click)="updateNote(n['content'],i)" style="cursor: pointer"><u>Update</u></b>
+        <hr>
+      </div>
+      </div>
+
+
+
     </div>
-    <div class="col-lg-1 mx-auto"></div>
+    <div class="col-lg-3">
+      <div class="card border-primary mb-3" [hidden]="userId==-1">
+        <div class="card-header">Tags</div>
+        <div class="card-body text-primary">
+          <p class="card-text">
+            <li *ngFor="let c of entities">
+            <a routerLink="/tags/{{c['id']}}/{{c['name']}}">{{c["name"]}}</a>
+            </li>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </div>

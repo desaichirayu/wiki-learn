@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SearchQuery} from './search-query';
+const wiki = require('wikijs').default;
 import {Router} from "@angular/router";
 import {User} from "./models/user.model.client";
 import {UserService} from "./services/user.service";
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit{
   title = 'wiki-learn';
   pageURL= '/';
   searchQuery = new SearchQuery('');
+
   recentUsers = [];
   recentLikedPages = [];
   userFN = "";
