@@ -32,7 +32,10 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     console.log("AppComponent: ngOnInit called");
     this.userService.authenticate(this.cookieService.get("user")).then(response => this.handleResponse(response));
-    this.userService.findRecentUsers().then(response => this.recentUsers = response);
+    this.userService.findRecentUsers().then(response => {
+      this.recentUsers = response;
+      this.recentUsers.filter(user => user.firstName != this.user.firstName)
+    });
   }
 
   handleResponse(response){
