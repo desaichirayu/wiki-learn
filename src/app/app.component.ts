@@ -32,10 +32,6 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     console.log("AppComponent: ngOnInit called");
     this.userService.authenticate(this.cookieService.get("user")).then(response => this.handleResponse(response));
-    this.userService.findRecentUsers().then(response => {
-      this.recentUsers = response;
-      this.recentUsers.filter(user => user.firstName != this.user.firstName)
-    });
   }
 
   handleResponse(response){
@@ -48,6 +44,14 @@ export class AppComponent implements OnInit{
         this.recentLikedPages = response;
       });
     }
+    this.userService.findRecentUsers().then(response => {
+      this.recentUsers = response;
+      console.log(this.recentUsers);
+      if(this.user){
+        this.recentUsers = this.recentUsers.filter(usr => usr.firstName != this.user.firstName);
+      }
+      console.log(this.recentUsers);
+    });
   }
 
   checkSession(){
@@ -56,13 +60,13 @@ export class AppComponent implements OnInit{
   }
 
   navigateHome(){
-    this.router.navigateByUrl('/register', {skipLocationChange: true}).then(()=>
+    this.router.navigateByUrl('/pass', {skipLocationChange: true}).then(()=>
       this.router.navigate(['/']));
   }
 
   doLogout(){
     this.userService.logout(JSON.stringify(this.user)).then(() => {this.user = null});
-    this.router.navigateByUrl('/register', {skipLocationChange: true}).then(()=>
+    this.router.navigateByUrl('/pass', {skipLocationChange: true}).then(()=>
       this.router.navigate(['/']));
   }
 }

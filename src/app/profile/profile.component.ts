@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit {
   };
   otherUserProfile = false;
   pageURL= '/profile';
-  profileIcon = "https://ui-avatars.com/api/?name=###&size=192&rounded=true";
+  profileIcon = '../../assets/images/user_profiles/' + this.getRandomIconNumber() + '.png';
   recentUsers = [];
   recentPages = [];
   recentlyLikedPages = [];
@@ -33,6 +33,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(private userService: UserService, private cookieService: CookieService, private router: Router, private activatedRoute: ActivatedRoute, private detailsService: DetailsService) {
     console.log("Profile Component Cons called");
+    this.profileIcon = '../../assets/images/user_profiles/' + this.getRandomIconNumber() + '.png';
   }
 
   ngOnInit() {
@@ -51,7 +52,8 @@ export class ProfileComponent implements OnInit {
 
   postAuth(response){
     this.user=response;
-    this.profileIcon = this.profileIcon.replace("###", this.user.firstName + '+' + this.user.lastName);
+    // this.profileIcon = this.profileIcon.replace("###", this.user.firstName + '+' + this.user.lastName);
+    this.profileIcon = '../../assets/images/user_profiles/' + this.getRandomIconNumber() + '.png';
     this.pageURL = this.router.url;
     this.userService.findRecentUsers().then(res => this.recentUsers = res);
     this.detailsService.getRecentPages().then(res => this.recentPages = res);
@@ -76,6 +78,10 @@ export class ProfileComponent implements OnInit {
     this.editing_p = !this.editing_p;
     this.userPhone = userPhone;
     this.userService.updateUserPhone(this.user.id, this.userPhone).then(response => this.user = response);
+  }
+
+  getRandomIconNumber(){
+    return Math.floor(Math.random() * 5) + 1;
   }
 
 }

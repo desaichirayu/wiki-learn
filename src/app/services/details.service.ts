@@ -24,7 +24,7 @@ export class DetailsService {
   URL_NER_SERVICE = this.nerChoice + '/entities';
 
   HOST_BACKEND_LOCAL = 'http://localhost:8080';
-  HOST_BACKEND_REMOTE = 'https://quiet-reaches-66701.herokuapp.com';
+  HOST_BACKEND_REMOTE = serverUrl;
 
   backendChoice = this.HOST_BACKEND_REMOTE;
 

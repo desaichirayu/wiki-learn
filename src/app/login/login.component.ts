@@ -27,12 +27,11 @@ export class LoginComponent implements OnInit {
 
   finishUp(response){
     if(response){
-      console.log(response);
       let user = new User();
       user = response;
       this.cookieService.set("user", user.username);
       console.log(JSON.stringify(this.cookieService.get("user")));
-      this.router.navigateByUrl('/profile', {skipLocationChange: true})
+      this.router.navigateByUrl('/pass', {skipLocationChange: true})
         .then(()=>this.router.navigate(['/']));
     } else{
       alert("Login Failed Check Your Username Password");
