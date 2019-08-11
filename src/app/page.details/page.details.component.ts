@@ -42,8 +42,8 @@ export class PageDetailsComponent implements OnInit {
       this.title = params.title;
 
       this.userService.authenticate(this.cookieService.get("user")).then(response=>{
-
-        if(response!=null){
+        console.log('Inside Oninit PageDetailsComponent: ' + this.cookieService.get("user"));
+        if(response){
           this.userId = response['id'];
           if(response.ipAddress){
             this.usertype=0;
@@ -71,10 +71,6 @@ export class PageDetailsComponent implements OnInit {
             this.editable=[].fill(false,0,this.notes.length);
 
           })
-
-
-
-
         });
       });
 

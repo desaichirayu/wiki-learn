@@ -66,6 +66,9 @@ export class AppComponent implements OnInit{
 
   doLogout(){
     this.userService.logout(JSON.stringify(this.user)).then(() => {this.user = null});
+    this.cookieService.deleteAll("user", "localhost");
+    this.cookieService.deleteAll("user", "/");
+    this.cookieService.deleteAll("user", "wiki-learn.herokuapp.com");
     this.router.navigateByUrl('/pass', {skipLocationChange: true}).then(()=>
       this.router.navigate(['/']));
   }
