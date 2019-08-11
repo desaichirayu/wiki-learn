@@ -88,7 +88,7 @@ This happens in the background along with the summary to populate the */details*
 
 ### Installation Instructions:
 
-### Client :: https://github.com/desaichirayu/wiki-learn/releases/tag/1.0
+### Client :: https://github.com/desaichirayu/wiki-learn/releases/tag/1.1
 * run ```npm install```
 * replace urls in constants/index.js file with local urls
 * run ```ng serve```
