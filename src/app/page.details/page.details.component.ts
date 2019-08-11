@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {DetailsService} from "../services/details.service";
+import {UserService} from "../services/user.service";
+import {CookieService} from "ngx-cookie-service";
 
 
 @Component({
@@ -10,7 +12,7 @@ import {DetailsService} from "../services/details.service";
 })
 export class PageDetailsComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute, private detailsService: DetailsService) { }
+  constructor(private activatedRoute: ActivatedRoute, private detailsService: DetailsService, private userService:UserService,private cookieService:CookieService) { }
 
   title = '';
   summary = '';
@@ -22,9 +24,9 @@ export class PageDetailsComponent implements OnInit {
   usernote = '';
 
   //TODO:change
-  userId = 1;
+  userId = -1;
   //TODO:change
-  usertype = 1;
+  usertype = -1;
 
   validLike = false;
   validDislike = false;
@@ -38,6 +40,21 @@ export class PageDetailsComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       this.title = params.title;
+
+      this.userService.authenticate(this.cookieService.get("user")).then(response=>{
+
+        if(response!=null){
+          this.userId = response['id'];
+          if(response.ipAddress){
+            this.usertype=0;
+          }
+          else {
+            this.usertype = 1;
+          }
+        }
+      });
+
+
       this.detailsService.getSummary(this.title).then(summary => {
         this.summary = summary;
         this.detailsService.findPageExists(params.title,summary).then(coll=>{
@@ -48,8 +65,8 @@ export class PageDetailsComponent implements OnInit {
           this.pageId = coll["id"];
           this.entities = coll["entities"];
 
-          this.detailsService.getNotes(this.pageId).then(response=>{
 
+          this.detailsService.getNotes(this.pageId).then(response=>{
             this.notes = response;
             this.editable=[].fill(false,0,this.notes.length);
 

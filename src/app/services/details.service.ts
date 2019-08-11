@@ -18,15 +18,15 @@ export class DetailsService {
   OPTIONS_FOR_SUMMARY = '&format=json&origin=*&formatversion=2&prop=pageimages|pageterms&piprop=thumbnail&pithumbsize=600&pilicense=any&titles=';
 
   HOST_NER_LOCAL = 'http://localhost:5000';
-  HOST_NER_REMOTE = '';
-  nerChoice = this.HOST_NER_LOCAL;
+  HOST_NER_REMOTE = 'https://rocky-ocean-10939.herokuapp.com';
+  nerChoice = this.HOST_NER_REMOTE;
 
   URL_NER_SERVICE = this.nerChoice + '/entities';
 
   HOST_BACKEND_LOCAL = 'http://localhost:8080';
-  HOST_BACKEND_REMOTE = '';
+  HOST_BACKEND_REMOTE = 'https://quiet-reaches-66701.herokuapp.com';
 
-  backendChoice = this.HOST_BACKEND_LOCAL;
+  backendChoice = this.HOST_BACKEND_REMOTE;
 
   URL_FIND_PAGE = this.backendChoice + '/api/pages/search?q=';
   URL_CREATE_PAGE = this.backendChoice + '/api/pages';
