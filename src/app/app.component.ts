@@ -68,6 +68,10 @@ export class AppComponent implements OnInit{
     this.cookieService.deleteAll("user", "localhost");
     this.cookieService.deleteAll("user", "/");
     this.cookieService.deleteAll("user", "wiki-learn.herokuapp.com");
+    this.cookieService.delete("user");
+    this.cookieService.delete("user", "localhost");
+    this.cookieService.delete("user", "/");
+    this.cookieService.delete("user", "wiki-learn.herokuapp.com");
     this.router.navigateByUrl('/pass', {skipLocationChange: true}).then(()=>
       this.router.navigate(['/']));
   }
