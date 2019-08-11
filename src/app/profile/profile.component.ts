@@ -55,7 +55,14 @@ export class ProfileComponent implements OnInit {
     // this.profileIcon = this.profileIcon.replace("###", this.user.firstName + '+' + this.user.lastName);
     this.profileIcon = '../../assets/images/user_profiles/' + this.getRandomIconNumber() + '.png';
     this.pageURL = this.router.url;
-    this.userService.findRecentUsers().then(res => this.recentUsers = res);
+    this.userService.findRecentUsers().then(response => {
+      this.recentUsers = response;
+      console.log(this.recentUsers);
+      if(this.user){
+        this.recentUsers = this.recentUsers.filter(usr => usr.firstName != this.user.firstName);
+      }
+      console.log(this.recentUsers);
+    });
     this.detailsService.getRecentPages().then(res => this.recentPages = res);
     this.userService.findRecentLikedPagesForUser(this.user.id).then(res => this.recentlyLikedPages = res);
   }
