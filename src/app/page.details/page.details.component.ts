@@ -3,7 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {DetailsService} from "../services/details.service";
 import {UserService} from "../services/user.service";
 import {CookieService} from "ngx-cookie-service";
-
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-page.details',
@@ -89,17 +89,26 @@ export class PageDetailsComponent implements OnInit {
 
 
   likePage = () =>{
-    this.detailsService.postLike(this.userId,this.pageId).then(upvotes=>{
-      this.validLike = upvotes[0];
-      this.likeCount = upvotes[1];
-    });
+    if(this.userId==-1){
+      alert("Please Login to Like Pages and Create Notes");
+    }else{
+      this.detailsService.postLike(this.userId,this.pageId).then(upvotes=>{
+        this.validLike = upvotes[0];
+        this.likeCount = upvotes[1];
+      });
+    }
+   return;
   };
 
   dislikePage = () =>{
-    this.detailsService.postDislike(this.userId,this.pageId).then(downvotes=>{
-      this.validDislike = downvotes[0];
-      this.dislikeCount = downvotes[1];
-    });
+    if(this.userId==-1){
+      alert("Please Login to Like Pages and Create Notes");
+    }else{
+      this.detailsService.postDislike(this.userId,this.pageId).then(downvotes=>{
+        this.validDislike = downvotes[0];
+        this.dislikeCount = downvotes[1];
+      });
+    }
   };
 
   getUTC(x){

@@ -1,8 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-
-
-    <div class="col-lg-1" [hidden]="userId==-1">
+    <div class="col-lg-2">
         <div class="row mt-2 justify-content-center">
           <button class="material-icons md-48 mx-1" (click)="likePage()">
             thumb_up
@@ -16,7 +14,7 @@
           <b><i>{{dislikeCount}}</i></b>
         </div>
     </div>
-    <div class="col-lg-8">
+    <div class="col-lg-7">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">{{title}}</h5>
@@ -67,14 +65,11 @@
       <div class="card border-primary mb-3" [hidden]="userId==-1">
         <div class="card-header">Tags</div>
         <div class="card-body text-primary">
-          <p class="card-text">
             <li *ngFor="let c of entities">
             <a routerLink="/tags/{{c['id']}}/{{c['name']}}">{{c["name"]}}</a>
             </li>
         </div>
       </div>
     </div>
-
-
   </div>
 </div>
