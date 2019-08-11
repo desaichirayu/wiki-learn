@@ -14,6 +14,7 @@ import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import {UserService} from "./services/user.service";
 import {CookieService} from "ngx-cookie-service";
+import { PassthroughComponent } from './passthrough/passthrough.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {CookieService} from "ngx-cookie-service";
     TagresultsComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    PassthroughComponent
   ],
   imports: [
     BrowserModule,

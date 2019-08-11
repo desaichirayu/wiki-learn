@@ -6,6 +6,7 @@ import {TagresultsComponent} from './tagresults/tagresults.component';
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {ProfileComponent} from "./profile/profile.component";
+import {PassthroughComponent} from "./passthrough/passthrough.component";
 
 
 const routes: Routes = [
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path:"login", component:LoginComponent},
   {path:"register", component:RegisterComponent},
   {path:"profile", component: ProfileComponent},
-  {path:"profile/:pid", component: ProfileComponent}
+  {path:"profile/:pid", component: ProfileComponent},
+  {path: "pass", component: PassthroughComponent}
 ];
 
 @NgModule({
