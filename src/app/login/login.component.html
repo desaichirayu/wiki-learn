@@ -1,11 +1,11 @@
 <div class="text-center">
-  <form class="form-signin">
+  <form class="form-signin" ngNativeValidate #form>
     <h1 class="h3 mb-3 font-weight-normal">Login</h1>
     <label for="inputEmail" class="sr-only">Email address</label>
-    <input [(ngModel)]="username" [ngModelOptions]="{standalone: true}" type="email" id="inputEmail" class="form-control" placeholder="Username" required autofocus/>
+    <input [(ngModel)]="username" [ngModelOptions]="{standalone: true}" type="text" id="inputEmail" class="form-control" placeholder="Username" required autofocus/>
     <label for="inputPassword" class="sr-only">Password</label>
     <input [(ngModel)]="password" [ngModelOptions]="{standalone: true}" type="password" id="inputPassword" class="form-control" placeholder="Password" required/>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="login(username, password)">Sign in</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="form.checkValidity() ? login(username, password) : null">Sign in</button>
     <a class="mt-5 mt-3 mb-3 text-muted" routerLink="/register">register</a>
   </form>
 </div>

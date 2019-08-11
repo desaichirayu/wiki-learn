@@ -1,5 +1,5 @@
 <div class="text-center">
-  <form class="form-signin">
+  <form class="form-signin" ngNativeValidate  #form>
     <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
     <label for="inputFN" class="sr-only">First Name</label>
     <input [(ngModel)]="firstName" [ngModelOptions]="{standalone: true}" type="text" id="inputFN" class="form-control" placeholder="First Name" required autofocus/>
@@ -23,7 +23,7 @@
         <input class="form-check-input radio-inline" type="radio" name="usrrole" id="inlineRadio2" [(ngModel)]="role" value="superUser">
         Super User</label>
     </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="register(firstName, lastName, email, phone, username, password, role)">Sign Up</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="form.checkValidity() ? register(firstName, lastName, email, phone, username, password, role) : null">Sign Up</button>
     <a class="mt-5 mt-3 mb-3 text-muted" routerLink="/login">login</a>
   </form>
 </div>
