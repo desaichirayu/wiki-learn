@@ -46,11 +46,9 @@ export class AppComponent implements OnInit{
     }
     this.userService.findRecentUsers().then(response => {
       this.recentUsers = response;
-      console.log(this.recentUsers);
       if(this.user){
         this.recentUsers = this.recentUsers.filter(usr => usr.firstName != this.user.firstName);
       }
-      console.log(this.recentUsers);
     });
   }
 
@@ -66,6 +64,7 @@ export class AppComponent implements OnInit{
 
   doLogout(){
     this.userService.logout(JSON.stringify(this.user)).then(() => {this.user = null});
+    this.cookieService.deleteAll("user");
     this.cookieService.deleteAll("user", "localhost");
     this.cookieService.deleteAll("user", "/");
     this.cookieService.deleteAll("user", "wiki-learn.herokuapp.com");
